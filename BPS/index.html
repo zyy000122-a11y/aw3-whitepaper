@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AW3C-Whitepaper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff; /* light theme */
+            color: #111111;
+            line-height: 1.6;
+            background-image: url('assets/bg.png'); /* replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 32px;
+            padding-right: 32px;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background-color: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            width: 100%;
+            position: relative;
+            height: 100%;
+        }
+        .header-content-logo{
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 21px;
+            font-weight: 600;
+            color: #38b000;
+            text-decoration: none;
+            margin-right: 18px;
+            gap: 8px;
+        }
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            margin-right: 3px;
+            border-radius: 4px;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        .chip-text {
+            display: flex;
+            align-items: center;
+            border-radius: 14px;
+            padding: 2.5px 12px 2.5px 7px;
+            margin-right: 5px;
+            font-size: 14px;
+            color: #061C54;
+            font-weight: 600;
+            gap: 6px;
+            background: none;
+            border: none;
+        }
+        .chip-icon-img {
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+            margin-right: 3px;
+        }
+        .page-indicator {
+            font-size: 14px;
+            color: #061C54;
+            margin-left: 6px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            /* gap: 15px; */
+            margin-left: auto;
+        }
+        
+        .btn {
+            padding: 6px 14px;
+            font-size: 14px;
+            border-radius: 24px;
+            background-color: #f8fafb;
+            color: #222;
+            border: 1px solid #e3e6e8;
+            display: flex;
+            margin-right: 10px;
+            align-items: center;
+            /* gap: 4px; */
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            font-weight: 500;
+        }
+        .btn svg {
+            width: 0.95em;
+            height: 0.95em;
+            margin-right: 4px;
+            display: inline-block;
+            vertical-align: middle;
+            fill: #061C54;
+            transition: fill 0.18s;
+        }
+        .btn-download,
+        .btn-lang {
+            min-width: 0;
+            text-align: center;
+        }
+        .btn-download:hover, .btn-lang:hover {
+            background-color: #d9fbe5;
+            color: #061C54;
+            border-color: #b2f2c2;
+            box-shadow: 0 0 0 2px #b9fbc066;
+        }
+        .btn-download:hover svg, .btn-lang:hover svg {
+            fill: #38b000;
+        }
+        
+        /* Progress Bar */
+        .progress-header-wrapper {
+            width: 340px;
+            height: 18px;
+            background-color: rgba(0, 0, 0, 0.06);
+            border-radius: 999px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            z-index: 1;
+            transition: all 0.16s;
+        }
+
+        @media (max-width: 800px) {
+            .header-content {
+                flex-wrap: wrap;
+                row-gap: 7px;
+                padding: 0 2vw;
+            }
+            .progress-header-wrapper {
+                position: static;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 0 12px 0;
+                left: unset;
+                top: unset;
+                transform: none;
+                order:3;
+            }
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #b9fbc0, #38b000);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: #0b3d1f;
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 40px 0;
+        }
+        
+        .pdf-container {
+            width: 100%;
+            overflow: visible;
+            margin-bottom: 40px;
+            background: none;
+            border: none;
+        }
+        .pdf-pages {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            padding: 24px 80px;
+            max-width: 1060px;
+            min-height: 1000px;
+            margin: 0 auto;
+        }
+        .pdf-page-canvas {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            max-width: 960px;
+        }
+        
+        .pdf-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .pdf-placeholder i {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .footer-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #3a86ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-content-logo">
+                    <a href="#" class="logo"><img src="assets/logo.jpg" class="logo-img" alt="Logo"></a>
+                    <span class="page-indicator" id="pageIndicator">Page 1 of 1</span>
+                </div>
+                <div class="progress-header-wrapper">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-text" id="progressText">0%</div>
+                </div>
+                <div class="nav-buttons">
+                    <span class="chip-text"><img src="assets/chip.png" class="chip-icon-img" alt="Chip">AW3C Whitepaper                    </span>
+                    <button class="btn btn-download" id="downloadBtn" type="button"><svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M10 2a1 1 0 0 1 1 1v8.585l2.293-2.292a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4A1 1 0 1 1 6.293 9.293L8.5 11.5V3a1 1 0 0 1 1-1z"></path><path d="M4 15a1 1 0 1 1 0-2h12a1 1 0 1 1 0 2H4z"></path></svg>Download</button>
+                    <button class="btn btn-lang" id="langBtn" type="button" aria-label="Language Toggle"><svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm1 14.93V17a1 1 0 1 1-2 0v-.07A6.005 6.005 0 0 1 4.07 11H5a1 1 0 1 1 0 2h-.93A6.005 6.005 0 0 1 9 17.93V17a1 1 0 1 1 2 0v.93A6.005 6.005 0 0 1 15.93 13H15a1 1 0 1 1 0-2h.93A6.005 6.005 0 0 1 11 4.07V5a1 1 0 1 1-2 0v-.07A6.005 6.005 0 0 1 15.93 9H15a1 1 0 1 1 0-2h.93A6.005 6.005 0 0 1 11 2.07V3a1 1 0 1 1-2 0v-.93A6.005 6.005 0 0 1 4.07 7H5a1 1 0 1 1 0 2h-.93A6.005 6.005 0 0 1 9 15.93z"></path></svg><span id="langText">EN | 中文</span></button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 进度条直接集成在header -->
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="pdf-container">
+                <div id="pdfPages" class="pdf-pages"></div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- <div class="footer-text">The future is decentralized AI - gaianet.ai</div> -->
+                <div class="footer-links">
+                    <a href="https://www.aw3c.org" class="footer-link" target="_blank" rel="noopener">Website</a>
+                    <!-- <a href="https://docs.gaianet.ai" class="footer-link" target="_blank" rel="noopener">Documentation</a> -->
+                    <!-- <a href="https://github.com/gaianet" class="footer-link" target="_blank" rel="noopener">GitHub</a> -->
+                    <a href="https://x.com/wangwang1977661?t=XJ6AED4MErGpVJh2ta1dYg&s=35" class="footer-link" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://t.me/+5QRyoafEgSE4Njc1" class="footer-link" target="_blank" rel="noopener">Telegram</a>
+                    <!-- <a href="https://medium.com/gaianet" class="footer-link" target="_blank" rel="noopener">Medium</a> -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" referrerpolicy="no-referrer"></script>
+    <script>
+        // 语言与PDF资源配置
+        const pdfMap = {
+            en: {
+                path: 'assets/aw3-whitepaper.pdf', // 如有英文版独立文件，请改为 gaia-whitepaper-en.pdf
+                filename: 'aw3-whitepaper.pdf'
+            },
+            zh: {
+                path: 'assets/aw3-whitepaper-zh.pdf', // 中文版文件名，如不存在请将其放入 assets 并改名
+                filename: 'aw3-whitepaper-zh.pdf'
+            }
+        };
+
+        let currentLang = (document.documentElement.lang || 'en').toLowerCase() === 'zh' ? 'zh' : 'en';
+        
+        // PDF.js 配置
+        const pdfjsVersion = '3.11.174';
+        if (window['pdfjsLib']) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsVersion}/pdf.worker.min.js`;
+        }
+
+        const pdfPagesRoot = document.getElementById('pdfPages');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const langBtn = document.getElementById('langBtn');
+        const pageIndicator = document.getElementById('pageIndicator');
+        const progressText = document.getElementById('progressText');
+        let totalPages = 1;
+        let currentPage = 1;
+
+        async function renderPdf(url) {
+            if (!window['pdfjsLib']) return;
+            // 清空已有页面
+            while (pdfPagesRoot.firstChild) pdfPagesRoot.removeChild(pdfPagesRoot.firstChild);
+
+            const loadingTask = pdfjsLib.getDocument(url);
+            const pdf = await loadingTask.promise;
+            totalPages = pdf.numPages;
+            currentPage = 1;
+            updatePageIndicator();
+
+            const dpr = window.devicePixelRatio || 1;
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const containerWidth = pdfPagesRoot.clientWidth - 32;
+                const baseScale = Math.min(2, containerWidth / page.view[2]);
+                const viewport = page.getViewport({ scale: baseScale });
+
+                const canvas = document.createElement('canvas');
+                canvas.className = 'pdf-page-canvas';
+                canvas.setAttribute('data-page', String(pageNum));
+                const context = canvas.getContext('2d');
+
+                // 为高分屏提高分辨率
+                canvas.width = Math.floor(viewport.width * dpr);
+                canvas.height = Math.floor(viewport.height * dpr);
+                canvas.style.width = Math.floor(viewport.width) + 'px';
+                canvas.style.height = Math.floor(viewport.height) + 'px';
+                context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                await page.render({ canvasContext: context, viewport }).promise;
+                pdfPagesRoot.appendChild(canvas);
+            }
+            // 初始计算一次当前页
+            computeCurrentPageOnScroll();
+        }
+
+        function updatePageIndicator() {
+            if (pageIndicator) {
+                pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+            }
+        }
+
+        function computeCurrentPageOnScroll() {
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const viewportTop = window.scrollY + headerHeight + 20; // 视口基准
+            const canvases = Array.from(document.querySelectorAll('.pdf-page-canvas'));
+            if (canvases.length === 0) return;
+            let closest = { page: 1, dist: Infinity };
+            for (const c of canvases) {
+                const rect = c.getBoundingClientRect();
+                const top = window.scrollY + rect.top;
+                const mid = top + rect.height / 2;
+                const dist = Math.abs(mid - viewportTop);
+                const page = Number(c.getAttribute('data-page')) || 1;
+                if (dist < closest.dist) closest = { page, dist };
+            }
+            const nextPage = Math.min(Math.max(closest.page, 1), totalPages);
+            if (nextPage !== currentPage) {
+                currentPage = nextPage;
+                updatePageIndicator();
+            }
+        }
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang === 'zh' ? 'zh' : 'en';
+            // 更新按钮文案
+            document.getElementById('langText').textContent = lang === 'zh' ? '中文 | EN' : 'EN | 中文';
+            // 渲染PDF（无内滚动条）
+            renderPdf(pdfMap[lang].path);
+        }
+
+        // 初始化
+        applyLanguage(currentLang);
+
+        // 下载PDF功能（根据当前语言）
+        downloadBtn.addEventListener('click', function() {
+            const { path, filename } = pdfMap[currentLang];
+            const link = document.createElement('a');
+            link.href = path;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // 中英文切换功能
+        langBtn.addEventListener('click', function() {
+            // 中英文下载
+            // const nextLang = currentLang === 'en' ? 'zh' : 'en';
+            const nextLang = currentLang === 'en' ? 'en' : 'en';
+            applyLanguage(nextLang);
+        });
+
+        // 滚动进度条（与页面滚动绑定）
+        window.addEventListener('scroll', function() {
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+            if (progressText) progressText.textContent = Math.round(scrollPercent) + '%';
+            computeCurrentPageOnScroll();
+        });
+    </script>
+</body>
+</html>
