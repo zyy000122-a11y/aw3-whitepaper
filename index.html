@@ -268,7 +268,9 @@
             gap: 30px;
             flex-wrap: wrap;
         }
-        
+        .footer-links img{
+            border-radius: 50%;
+        }
         .footer-link {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
@@ -319,11 +321,22 @@
             <div class="footer-content">
                 <!-- <div class="footer-text">The future is decentralized AI - gaianet.ai</div> -->
                 <div class="footer-links">
-                    <a href="https://www.aw3c.org" class="footer-link" target="_blank" rel="noopener">Website</a>
+                    <div class="footer-link">
+                        <img src="assets/logo.jpg" class="logo-img" alt="Logo">
+                        <a href="https://www.aw3c.org" class="footer-link" target="_blank" rel="noopener">Website</a>
+                    </div>
                     <!-- <a href="https://docs.gaianet.ai" class="footer-link" target="_blank" rel="noopener">Documentation</a> -->
                     <!-- <a href="https://github.com/gaianet" class="footer-link" target="_blank" rel="noopener">GitHub</a> -->
-                    <a href="https://x.com/wangwang1977661?t=XJ6AED4MErGpVJh2ta1dYg&s=35" class="footer-link" target="_blank" rel="noopener">Twitter</a>
-                    <a href="https://t.me/+5QRyoafEgSE4Njc1" class="footer-link" target="_blank" rel="noopener">Telegram</a>
+                    <div class="footer-link">
+                        <img src="assets/tt.png" class="logo-img" alt="Logo">
+                        <a href="https://x.com/wangwang1977661?t=XJ6AED4MErGpVJh2ta1dYg&s=35" class="footer-link" target="_blank" rel="noopener">Twitter</a>
+                    </div>
+                    <div class="footer-link">
+                        <img src="assets/tg.png" class="logo-img" alt="Logo">
+                        <a href="https://t.me/+5QRyoafEgSE4Njc1" class="footer-link" target="_blank" rel="noopener">Telegram</a>
+                    </div>
+                    
+                    
                     <!-- <a href="https://medium.com/gaianet" class="footer-link" target="_blank" rel="noopener">Medium</a> -->
                 </div>
             </div>
@@ -438,7 +451,8 @@
 
         // 下载PDF功能（根据当前语言）
         downloadBtn.addEventListener('click', function() {
-            const { path, filename } = pdfMap[currentLang];
+            const { path, filename } = pdfMap['en'];
+            // const { path, filename } = pdfMap[currentLang];
             const link = document.createElement('a');
             link.href = path;
             link.download = filename;
@@ -450,8 +464,8 @@
         // 中英文切换功能
         langBtn.addEventListener('click', function() {
             // 中英文下载
-            // const nextLang = currentLang === 'en' ? 'zh' : 'en';
-            const nextLang = currentLang === 'en' ? 'en' : 'en';
+            const nextLang = currentLang === 'en' ? 'zh' : 'en';
+            // const nextLang = currentLang === 'en' ? 'en' : 'en';
             applyLanguage(nextLang);
         });
 
